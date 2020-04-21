@@ -1,48 +1,44 @@
 package control;
 
 import view.*;
-import model.*;
+
+import java.rmi.RemoteException;
+import server.InterfaceAgenda;
 
 public class Control {
 	private Login login;
 	private CreateAccount createAcc;
-	private Model model;
 	private Home home;
+	private InterfaceAgenda agenda;
 
-	public Control() {
-		Model model = new Model();
+	public Control(InterfaceAgenda agenda) {
+		this.agenda = agenda;
 		Login login = new Login();
 		this.setVista(login);
-		this.model = model;
-		model.setLogin(login);
 		login.setControl(this);
-		login.setModel(model);
 		login.setVisible(true);
 	}
 
-// VISTA LOGIN
-
-	// Boton de iniciar session
+// Login View
 	public void loginPress(String userName, String userPass) {
-		 //comprobacion de usuario/contraseña para acceder
-		if (model.loginUser(userName, userPass)) {
-			this.login.dispose();
-			if (home != null) {
-				this.home.setVisible(true);
-//				this.home.clearFields();
+		try {
+			if (agenda.loginUser(userName, userPass)) {
+				this.login.dispose();
+				if (home != null) {
+					this.home.setVisible(true);
+				} else {
+					this.home = new Home();
+					this.home.setControl(this);
+					this.home.setVisible(true);
+				}
 			} else {
-				this.home = new Home();
-				this.home.setControl(this);
-				this.home.setModelo(model);
-				this.home.setVisible(true);
-//				this.home.clearFields();
+				login.loginMessage();
 			}
-		} else {
-			login.loginMessage();
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 	}
 
-	// Boton para cambiar a la vista de crear usuario
 	public void goToCreateAcc() {
 		this.login.setVisible(false);
 		if (createAcc != null) {
@@ -51,13 +47,27 @@ public class Control {
 		} else {
 			this.createAcc = new CreateAccount();
 			this.createAcc.setControl(this);
-			this.createAcc.setModelo(this.model);
 			this.createAcc.setVisible(true);
 		}
 	}
 
+// Create Account View
+	public boolean createAcc(String username, String pwd) {
+		try {
+			return agenda.registerUser(username, pwd);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	// Generic method to return to login screen from anywhere
 	public void goToLogin() {
-//		model.closeSession();
+		try {
+			agenda.closeSession();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		if (createAcc != null) {
 			this.createAcc.dispose();
 		}
@@ -66,7 +76,6 @@ public class Control {
 		} else {
 			this.login = new Login();
 			this.login.setControl(this);
-			this.login.setModel(model);
 			this.login.setVisible(true);
 		}
 	}

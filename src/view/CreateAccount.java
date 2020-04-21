@@ -1,7 +1,7 @@
 package view;
 
 import control.*;
-import model.*;
+
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,7 +23,6 @@ import java.awt.event.KeyEvent;
 
 public class CreateAccount extends JFrame {
 	private Control control;
-	private Model model;
 
 	private int xx, xy; // position to move window
 
@@ -199,13 +198,13 @@ public class CreateAccount extends JFrame {
 
 // Create Account info checker
 	public void createAccChecker() {
-		String userName = txtUsername.getText();
+		String username = txtUsername.getText();
 		String pwd = String.valueOf(txtPwd.getPassword());
 		String pwdCheck = String.valueOf(txtPwdCheck.getPassword());
 		// Primero comprueba que todos los campos esten rellenos
 		if (pwd.length() > 0 && pwdCheck.length() > 0 && txtUsername.getText().length() > 0) {
 			if (pwd.equals(pwdCheck)) {
-				if (model.registerUser(userName, pwd)) {
+				if (control.createAcc(username, pwd)) {
 					cleanFields();
 					JOptionPane.showMessageDialog(btnCreateAccount, "Account Created");
 				} else {
@@ -229,9 +228,5 @@ public class CreateAccount extends JFrame {
 // Setters
 	public void setControl(Control control) {
 		this.control = control;
-	}
-
-	public void setModelo(Model model) {
-		this.model = model;
 	}
 }

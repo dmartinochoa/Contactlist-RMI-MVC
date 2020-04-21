@@ -2,7 +2,6 @@ package view;
 
 import control.*;
 
-import model.*;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +21,6 @@ import java.awt.geom.RoundRectangle2D;
 
 public class Login extends JFrame {
 	private Control control;
-	private Model model;
 
 	private int xx, xy; // Position to move window
 
@@ -203,12 +201,11 @@ public class Login extends JFrame {
 		});
 	}
 
-//Login methdos
+//Login methods
 	public void loginToDb() {
 		String userName = txtUsername.getText();
 		char[] userPassArray = passwordField.getPassword();
 		String userPass = String.valueOf(userPassArray);
-		System.out.println(userPass);
 		control.loginPress(userName, userPass);
 	}
 
@@ -225,9 +222,5 @@ public class Login extends JFrame {
 // SETTERS
 	public void setControl(Control control) {
 		this.control = control;
-	}
-
-	public void setModel(Model model) {
-		this.model = model;
 	}
 }

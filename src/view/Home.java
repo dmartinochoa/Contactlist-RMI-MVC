@@ -1,7 +1,7 @@
 package view;
 
 import control.*;
-import model.*;
+
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,17 +13,9 @@ import java.awt.Cursor;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-
-import javax.swing.JPasswordField;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class Home extends JFrame {
 	private Control control;
-	private Model model;
 
 	private int xx, xy; // position to move window
 	private JLabel lblExit;
@@ -96,9 +88,5 @@ public class Home extends JFrame {
 // Setters
 	public void setControl(Control control) {
 		this.control = control;
-	}
-
-	public void setModelo(Model model) {
-		this.model = model;
 	}
 }
