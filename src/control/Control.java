@@ -47,6 +47,7 @@ public class Control {
 			this.createAcc.setVisible(true);
 		}
 	}
+
 // Home View
 	public String getUser() {
 		try {
@@ -55,7 +56,7 @@ public class Control {
 			e.printStackTrace();
 		}
 		return "is the a joke";
-		
+
 	}
 
 // Create Account View

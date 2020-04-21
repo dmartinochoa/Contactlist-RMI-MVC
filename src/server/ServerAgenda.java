@@ -127,7 +127,7 @@ public class ServerAgenda implements InterfaceAgenda {
 			return false;
 		}
 	}
-	
+
 	public void closeSession() {
 		if (conection != null) {
 			try {
@@ -167,11 +167,11 @@ public class ServerAgenda implements InterfaceAgenda {
 			rs = pstms.executeQuery();
 			if (rs.next()) {
 				title = rs.getString(1);
-				title+= " Id:" + rs.getString(2);
-			} 
+				title += " Id:" + rs.getString(2);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 		return title;
 	}
 }

@@ -30,7 +30,7 @@ public class Home extends JFrame {
 		setUndecorated(true); // Removes border
 		setShape(new RoundRectangle2D.Double(0, 0, 800, 500, 40, 40)); // Border radius
 		getContentPane().setLayout(null);
-		
+
 // LABELS
 		lblUsername = new JLabel("New label");
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 20));
