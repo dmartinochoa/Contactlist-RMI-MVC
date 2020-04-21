@@ -34,7 +34,8 @@ public class Login extends JFrame {
 	private JLabel lblPassword;
 	private JLabel lblMinimize;
 
-	public Login() {
+	public Login(Control control) {
+		this.control = control;
 		setTitle("Login");
 		setResizable(false);
 		setBounds(100, 100, 800, 500);
@@ -217,10 +218,5 @@ public class Login extends JFrame {
 		txtUsername.setText("");
 		passwordField.setText("");
 		btnLogin.setEnabled(false);
-	}
-
-// SETTERS
-	public void setControl(Control control) {
-		this.control = control;
 	}
 }

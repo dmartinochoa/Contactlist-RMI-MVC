@@ -2,7 +2,6 @@ package view;
 
 import control.*;
 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -20,8 +19,10 @@ public class Home extends JFrame {
 	private int xx, xy; // position to move window
 	private JLabel lblExit;
 	private JLabel lblMinimize;
+	private JLabel lblUsername;
 
-	public Home() {
+	public Home(Control control) {
+		this.control = control;
 		setTitle("Home");
 		setResizable(false);
 		setBounds(100, 100, 800, 500);
@@ -29,6 +30,13 @@ public class Home extends JFrame {
 		setUndecorated(true); // Removes border
 		setShape(new RoundRectangle2D.Double(0, 0, 800, 500, 40, 40)); // Border radius
 		getContentPane().setLayout(null);
+		
+// LABELS
+		lblUsername = new JLabel("New label");
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblUsername.setBounds(29, 11, 303, 33);
+		lblUsername.setText(control.getUser());
+		getContentPane().add(lblUsername);
 
 // EXIT
 		lblExit = new JLabel("x");
@@ -83,10 +91,5 @@ public class Home extends JFrame {
 	}
 
 	public void cleanFields() {
-	}
-
-// Setters
-	public void setControl(Control control) {
-		this.control = control;
 	}
 }

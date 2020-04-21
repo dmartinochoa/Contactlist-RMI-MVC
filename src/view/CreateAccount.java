@@ -38,7 +38,8 @@ public class CreateAccount extends JFrame {
 	private JLabel lblExit;
 	private JLabel lblMinimize;
 
-	public CreateAccount() {
+	public CreateAccount(Control control) {
+		this.control = control;
 		setTitle("Create A ccount");
 		setResizable(false);
 		setBounds(100, 100, 800, 500);
@@ -223,10 +224,5 @@ public class CreateAccount extends JFrame {
 		txtPwdCheck.setText("");
 		txtUsername.setText("");
 		btnCreateAccount.setEnabled(true);
-	}
-
-// Setters
-	public void setControl(Control control) {
-		this.control = control;
 	}
 }

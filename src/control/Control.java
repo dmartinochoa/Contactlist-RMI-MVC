@@ -13,9 +13,8 @@ public class Control {
 
 	public Control(InterfaceAgenda agenda) {
 		this.agenda = agenda;
-		Login login = new Login();
+		Login login = new Login(this);
 		this.setVista(login);
-		login.setControl(this);
 		login.setVisible(true);
 	}
 
@@ -27,8 +26,7 @@ public class Control {
 				if (home != null) {
 					this.home.setVisible(true);
 				} else {
-					this.home = new Home();
-					this.home.setControl(this);
+					this.home = new Home(this);
 					this.home.setVisible(true);
 				}
 			} else {
@@ -45,10 +43,19 @@ public class Control {
 			this.createAcc.setVisible(true);
 			this.createAcc.cleanFields();
 		} else {
-			this.createAcc = new CreateAccount();
-			this.createAcc.setControl(this);
+			this.createAcc = new CreateAccount(this);
 			this.createAcc.setVisible(true);
 		}
+	}
+// Home View
+	public String getUser() {
+		try {
+			return agenda.getUser();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return "is the a joke";
+		
 	}
 
 // Create Account View
@@ -74,8 +81,7 @@ public class Control {
 		if (login != null) {
 			this.login.setVisible(true);
 		} else {
-			this.login = new Login();
-			this.login.setControl(this);
+			this.login = new Login(this);
 			this.login.setVisible(true);
 		}
 	}

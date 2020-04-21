@@ -127,7 +127,7 @@ public class ServerAgenda implements InterfaceAgenda {
 			return false;
 		}
 	}
-
+	
 	public void closeSession() {
 		if (conection != null) {
 			try {
@@ -154,5 +154,10 @@ public class ServerAgenda implements InterfaceAgenda {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public String getUser() throws RemoteException {
+		return "test";
 	}
 }
