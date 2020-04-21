@@ -158,6 +158,20 @@ public class ServerAgenda implements InterfaceAgenda {
 
 	@Override
 	public String getUser() throws RemoteException {
-		return "test";
+		ResultSet rs = null;
+		String title = null;
+		try {
+			String query = "select username, id from user where username = ?;";
+			PreparedStatement pstms = conection.prepareStatement(query);
+			pstms.setString(1, user);
+			rs = pstms.executeQuery();
+			if (rs.next()) {
+				title = rs.getString(1);
+				title+= " Id:" + rs.getString(2);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return title;
 	}
 }
