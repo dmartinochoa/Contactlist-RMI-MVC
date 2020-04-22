@@ -14,6 +14,7 @@ import java.awt.Cursor;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -57,7 +58,7 @@ public class Home extends JFrame {
 	private JButton btnSearchContact;
 	private JScrollPane scrollPaneMessage;
 	private JButton btnSendMsg;
-	private JButton btnSendMs;
+	private JButton btnDeleteMsg;
 	private JList listMessage;
 	private JSeparator separator_1;
 	private JTextField txtMsg;
@@ -65,6 +66,7 @@ public class Home extends JFrame {
 	private JTextField txtRecName;
 	private JLabel lblInputUsername;
 	private JLabel lblLogout;
+	private JButton btnOpenUrl;
 
 	public Home(Control control) {
 		this.control = control;
@@ -232,19 +234,19 @@ public class Home extends JFrame {
 
 // BUTTONS 
 		btnNewContact = new JButton("New");
-		btnNewContact.setBounds(29, 358, 104, 23);
+		btnNewContact.setBounds(29, 358, 70, 23);
 		getContentPane().add(btnNewContact);
 
 		btnEditContact = new JButton("Edit");
-		btnEditContact.setBounds(160, 358, 104, 23);
+		btnEditContact.setBounds(104, 358, 70, 23);
 		getContentPane().add(btnEditContact);
 
 		btnDeleteContact = new JButton("Delete");
-		btnDeleteContact.setBounds(287, 358, 104, 23);
+		btnDeleteContact.setBounds(180, 358, 70, 23);
 		getContentPane().add(btnDeleteContact);
 
 		btnSearchContact = new JButton("Search");
-		btnSearchContact.setBounds(415, 358, 104, 23);
+		btnSearchContact.setBounds(256, 358, 88, 23);
 		getContentPane().add(btnSearchContact);
 
 		btnSendMsg = new JButton("Send Msg");
@@ -263,14 +265,16 @@ public class Home extends JFrame {
 							return control.getMessages()[index];
 						}
 					});
+				} else {
+					JOptionPane.showMessageDialog(btnSendMsg, "Intruduce a message and a user");
 				}
 			}
 		});
 		btnSendMsg.setBounds(613, 196, 104, 23);
 		getContentPane().add(btnSendMsg);
 
-		btnSendMs = new JButton("Delete Msg");
-		btnSendMs.addActionListener(new ActionListener() {
+		btnDeleteMsg = new JButton("Delete Msg");
+		btnDeleteMsg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listMessage.getSelectedIndex() >= 0) {
 					String[] msgSplit = listMessage.getSelectedValue().toString().split(" : ");
@@ -284,13 +288,28 @@ public class Home extends JFrame {
 							return control.getMessages()[index];
 						}
 					});
+				} else {
+					JOptionPane.showMessageDialog(btnDeleteMsg, "No message selected");
 
 				}
 			}
 		});
-		btnSendMs.setBounds(529, 428, 104, 23);
+		btnDeleteMsg.setBounds(529, 428, 104, 23);
+		getContentPane().add(btnDeleteMsg);
 
-		getContentPane().add(btnSendMs);
+		btnOpenUrl = new JButton("Open Url");
+		btnOpenUrl.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (txtWebsite.getText().length() > 0) {
+					control.openUrl(txtWebsite.getText());
+				} else {
+					JOptionPane.showMessageDialog(btnOpenUrl, "There is no url for the contact");
+
+				}
+			}
+		});
+		btnOpenUrl.setBounds(354, 358, 88, 23);
+		getContentPane().add(btnOpenUrl);
 
 		separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);

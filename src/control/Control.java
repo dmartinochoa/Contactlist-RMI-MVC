@@ -2,6 +2,10 @@ package control;
 
 import view.*;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 
 import modelo.ContactInfo;
@@ -105,6 +109,16 @@ public class Control {
 			agenda.deleteMessage(id);
 		} catch (RemoteException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void openUrl(String url) {
+		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+		    try {
+				Desktop.getDesktop().browse(new URI(url));
+			} catch (IOException | URISyntaxException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
