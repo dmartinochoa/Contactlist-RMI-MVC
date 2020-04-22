@@ -25,12 +25,8 @@ public class Control {
 		try {
 			if (agenda.loginUser(userName, userPass)) {
 				this.login.dispose();
-				if (home != null) {
-					this.home.setVisible(true);
-				} else {
-					this.home = new Home(this);
-					this.home.setVisible(true);
-				}
+				this.home = new Home(this);
+				this.home.setVisible(true);
 			} else {
 				login.loginMessage();
 			}
@@ -87,6 +83,31 @@ public class Control {
 		return null;
 	}
 
+	public String[] getMessages() {
+		try {
+			return agenda.getMessages();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void sendMessage(String message, String recName) {
+		try {
+			agenda.sendMessage(message, recName);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteMessage(int id) {
+		try {
+			agenda.deleteMessage(id);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
 // Create Account View
 	public boolean createAcc(String username, String pwd) {
 		try {
@@ -106,6 +127,9 @@ public class Control {
 		}
 		if (createAcc != null) {
 			this.createAcc.dispose();
+		}
+		if (home != null) {
+			this.home.dispose();
 		}
 		if (login != null) {
 			this.login.setVisible(true);

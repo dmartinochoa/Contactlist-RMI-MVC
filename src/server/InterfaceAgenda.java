@@ -19,4 +19,10 @@ public interface InterfaceAgenda extends Remote {
 	public String[] getContacts() throws RemoteException;
 
 	public ContactInfo getContactInfo(String contactName) throws RemoteException;
+
+	public String[] getMessages() throws RemoteException;
+
+	public void sendMessage(String message, String recName) throws RemoteException;
+
+	public void deleteMessage(int id) throws RemoteException;
 }

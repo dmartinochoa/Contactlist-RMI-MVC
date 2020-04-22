@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import modelo.ContactInfo;
-import view.Login;
+import modelo.Message;
 
 public class ServerAgenda implements InterfaceAgenda {
 	private String USUARIO;
@@ -26,7 +26,6 @@ public class ServerAgenda implements InterfaceAgenda {
 	private String DRIVER;
 	private Connection conection;
 	private static String user;
-	private Login login;
 
 	public ServerAgenda() {
 		Properties propiedades = new Properties();
@@ -64,9 +63,20 @@ public class ServerAgenda implements InterfaceAgenda {
 			System.err.println("Error en la conexión");
 			e.printStackTrace();
 		}
-
 	}
 
+	public void closeSession() {
+		if (conection != null) {
+			try {
+				conection.close();
+				System.out.println("session cerrada");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
 	public boolean loginUser(String userName, String userPass) {
 		ResultSet rs = null;
 		try {
@@ -80,7 +90,7 @@ public class ServerAgenda implements InterfaceAgenda {
 				System.out.println("Login correcto");
 				conection.close();
 				this.conectar(this.USUARIO);
-				this.user = userName;
+				ServerAgenda.user = userName;
 				return true;
 			} else {
 				System.err.println("Login incorrecto");
@@ -101,6 +111,7 @@ public class ServerAgenda implements InterfaceAgenda {
 		}
 	}
 
+	@Override
 	public boolean registerUser(String userName, String userPass) {
 		ResultSet rs = null;
 		try {
@@ -127,34 +138,6 @@ public class ServerAgenda implements InterfaceAgenda {
 			closeSession();
 			e.printStackTrace();
 			return false;
-		}
-	}
-
-	public void closeSession() {
-		if (conection != null) {
-			try {
-				conection.close();
-				System.out.println("session cerrada");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public static void main(String[] args) {
-		Registry reg = null;
-		try {
-			System.out.println("Crea el registro");
-			reg = LocateRegistry.createRegistry(5555);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		System.out.println("creando el objeto servidor");
-		ServerAgenda serverObject = new ServerAgenda();
-		try {
-			reg.rebind("Agenda", (InterfaceAgenda) UnicastRemoteObject.exportObject(serverObject, 0));
-		} catch (RemoteException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -211,7 +194,7 @@ public class ServerAgenda implements InterfaceAgenda {
 			e.printStackTrace();
 		}
 		String[] contactArray = contactList.toArray(new String[contactList.size()]);
-		return contactArray;
+		return contactArray; // Returns all the contacts of a user
 	}
 
 	@Override
@@ -225,11 +208,75 @@ public class ServerAgenda implements InterfaceAgenda {
 			if (rs.next()) {
 				ContactInfo contactInfo = new ContactInfo(rs.getString(1), rs.getString(2), rs.getString(3),
 						rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
-				return contactInfo;
+				return contactInfo; // Returns the info of a specified contact
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public String[] getMessages() throws RemoteException {
+		ResultSet rs = null;
+		ArrayList<String> messageList = new ArrayList<String>();
+		try {
+			String query = "select id, message, username, recName, date from messages where recName = ?;";
+			PreparedStatement pstms = conection.prepareStatement(query);
+			pstms.setString(1, user);
+			rs = pstms.executeQuery();
+			while (rs.next()) {
+				Message msg = new Message(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5));
+				messageList.add(msg.toString());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String[] msgArray = messageList.toArray(new String[messageList.size()]);
+		return msgArray; // Returns all the messages of a user
+	}
+
+	@Override
+	public void sendMessage(String message, String recName) throws RemoteException {
+		try {
+			String query = "insert into `messages`(`message`, `username`, `recName`) values (?, ?,?)";
+			PreparedStatement pstms = conection.prepareStatement(query);
+			pstms.setString(1, message);
+			pstms.setString(2, user);
+			pstms.setString(3, recName);
+			pstms.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void deleteMessage(int id) {
+		try {
+			String query = "delete from `messages` where id = ?";
+			PreparedStatement pstms = conection.prepareStatement(query);
+			pstms.setInt(1, id);
+			pstms.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		Registry reg = null;
+		try {
+			System.out.println("Crea el registro");
+			reg = LocateRegistry.createRegistry(5555);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		System.out.println("creando el objeto servidor");
+		ServerAgenda serverObject = new ServerAgenda();
+		try {
+			reg.rebind("Agenda", (InterfaceAgenda) UnicastRemoteObject.exportObject(serverObject, 0));
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 }

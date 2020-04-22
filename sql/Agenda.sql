@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2020 at 02:17 PM
+-- Generation Time: Apr 22, 2020 at 04:14 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -51,6 +51,28 @@ INSERT INTO `contacts` (`id`, `idUser`, `name`, `address`, `phoneNumber`, `cellN
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `ID` int(11) NOT NULL,
+  `message` varchar(100) DEFAULT NULL,
+  `username` varchar(30) DEFAULT NULL,
+  `recName` varchar(30) DEFAULT NULL,
+  `date` varchar(50) NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`ID`, `message`, `username`, `recName`, `date`) VALUES
+(6, 'Hi', '123', 'test', '2020-04-22 16:12:15'),
+(7, 'Hello!', 'test', '123', '2020-04-22 16:12:37');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -80,6 +102,14 @@ ALTER TABLE `contacts`
   ADD KEY `idUser` (`idUser`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `userID` (`username`),
+  ADD KEY `recID` (`recName`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -94,6 +124,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `contacts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`

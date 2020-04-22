@@ -18,7 +18,13 @@ import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+
+import com.mysql.cj.protocol.MessageListener;
+
 import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Home extends JFrame {
 	private Control control;
@@ -45,10 +51,25 @@ public class Home extends JFrame {
 	private JTextField txtWebsite;
 	private JTextField txtNotes;
 	private JScrollPane scrollPaneNotes;
+	private JButton btnNewContact;
+	private JButton btnEditContact;
+	private JButton btnDeleteContact;
+	private JButton btnSearchContact;
+	private JScrollPane scrollPaneMessage;
+	private JButton btnSendMsg;
+	private JButton btnSendMs;
+	private JList listMessage;
+	private JSeparator separator_1;
+	private JTextField txtMsg;
+	private JScrollPane scrollPaneMsg;
+	private JTextField txtRecName;
+	private JLabel lblInputUsername;
+	private JLabel lblLogout;
 
 	public Home(Control control) {
 		this.control = control;
 		String[] contactList = control.getContacts();
+		String[] messages = control.getMessages();
 		setTitle("Home");
 		setResizable(false);
 		setBounds(100, 100, 800, 500);
@@ -99,6 +120,11 @@ public class Home extends JFrame {
 		lblNotes.setBounds(260, 247, 98, 21);
 		getContentPane().add(lblNotes);
 
+		lblInputUsername = new JLabel("Username:");
+		lblInputUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblInputUsername.setBounds(558, 164, 98, 21);
+		getContentPane().add(lblInputUsername);
+
 // TEXTBOX
 		txtName = new JTextField();
 		txtName.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -140,9 +166,14 @@ public class Home extends JFrame {
 		scrollPaneNotes.setBounds(260, 276, 259, 71);
 		getContentPane().add(scrollPaneNotes);
 		txtNotes = new JTextField();
+		txtNotes.setHorizontalAlignment(SwingConstants.LEFT);
 		scrollPaneNotes.setViewportView(txtNotes);
 		txtNotes.setFont(new Font("Tahoma", Font.BOLD, 12));
 		txtNotes.setColumns(10);
+
+		txtRecName = new JTextField();
+		txtRecName.setBounds(666, 165, 96, 20);
+		getContentPane().add(txtRecName);
 
 // CONTACT LIST
 		scrollPaneContactList = new JScrollPane();
@@ -177,6 +208,90 @@ public class Home extends JFrame {
 			}
 		});
 
+// MESSAGE LIST
+		scrollPaneMessage = new JScrollPane();
+		scrollPaneMessage.setBounds(29, 392, 490, 97);
+		getContentPane().add(scrollPaneMessage);
+		listMessage = new JList();
+		listMessage.setModel(new AbstractListModel() {
+			public int getSize() {
+				return messages.length;
+			}
+
+			public Object getElementAt(int index) {
+				return messages[index];
+			}
+		});
+		scrollPaneMessage.setViewportView(listMessage);
+
+		scrollPaneMsg = new JScrollPane();
+		scrollPaneMsg.setBounds(558, 55, 204, 97);
+		getContentPane().add(scrollPaneMsg);
+		txtMsg = new JTextField();
+		scrollPaneMsg.setViewportView(txtMsg);
+
+// BUTTONS 
+		btnNewContact = new JButton("New");
+		btnNewContact.setBounds(29, 358, 104, 23);
+		getContentPane().add(btnNewContact);
+
+		btnEditContact = new JButton("Edit");
+		btnEditContact.setBounds(160, 358, 104, 23);
+		getContentPane().add(btnEditContact);
+
+		btnDeleteContact = new JButton("Delete");
+		btnDeleteContact.setBounds(287, 358, 104, 23);
+		getContentPane().add(btnDeleteContact);
+
+		btnSearchContact = new JButton("Search");
+		btnSearchContact.setBounds(415, 358, 104, 23);
+		getContentPane().add(btnSearchContact);
+
+		btnSendMsg = new JButton("Send Msg");
+		btnSendMsg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (txtMsg.getText().length() > 0 && txtRecName.getText().length() > 0) {
+					control.sendMessage(txtMsg.getText(), txtRecName.getText());
+					txtMsg.setText("Message Sent To: " + txtRecName.getText());
+					txtRecName.setText("");
+					listMessage.setModel(new AbstractListModel() {
+						public int getSize() {
+							return control.getMessages().length;
+						}
+
+						public Object getElementAt(int index) {
+							return control.getMessages()[index];
+						}
+					});
+				}
+			}
+		});
+		btnSendMsg.setBounds(613, 196, 104, 23);
+		getContentPane().add(btnSendMsg);
+
+		btnSendMs = new JButton("Delete Msg");
+		btnSendMs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listMessage.getSelectedIndex() >= 0) {
+					String[] msgSplit = listMessage.getSelectedValue().toString().split(" : ");
+					control.deleteMessage(Integer.parseInt(msgSplit[0]));
+					listMessage.setModel(new AbstractListModel() {
+						public int getSize() {
+							return control.getMessages().length;
+						}
+
+						public Object getElementAt(int index) {
+							return control.getMessages()[index];
+						}
+					});
+
+				}
+			}
+		});
+		btnSendMs.setBounds(529, 428, 104, 23);
+
+		getContentPane().add(btnSendMs);
+
 		separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setForeground(Color.BLACK);
@@ -184,6 +299,12 @@ public class Home extends JFrame {
 		separator.setBounds(238, 57, 12, 290);
 		getContentPane().add(separator);
 
+		separator_1 = new JSeparator();
+		separator_1.setOrientation(SwingConstants.VERTICAL);
+		separator_1.setForeground(Color.BLACK);
+		separator_1.setBackground(Color.BLACK);
+		separator_1.setBounds(536, 55, 12, 290);
+		getContentPane().add(separator_1);
 // EXIT
 		lblExit = new JLabel("x");
 		lblExit.setForeground(Color.BLACK);
@@ -201,7 +322,7 @@ public class Home extends JFrame {
 			}
 		});
 
-// Minimize		
+// MINIMIZE	
 		lblMinimize = new JLabel("-");
 		lblMinimize.setForeground(Color.BLACK);
 		lblMinimize.setFont(new Font("Lucida Sans Unicode", Font.PLAIN, 40));
@@ -217,6 +338,23 @@ public class Home extends JFrame {
 			}
 		});
 
+// LOGOUT
+		lblLogout = new JLabel("Logout");
+		lblLogout.setForeground(Color.BLACK);
+		lblLogout.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblLogout.setBounds(626, 12, 78, 33);
+		getContentPane().add(lblLogout);
+		lblLogout.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				setState(ICONIFIED);
+				cleanFields();
+				control.goToLogin();
+			}
+
+			public void mouseEntered(MouseEvent e) {
+				lblLogout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+		});
 // Listeners para poder mover la vista
 		getContentPane().addMouseListener(new MouseAdapter() {
 			@Override
@@ -236,5 +374,14 @@ public class Home extends JFrame {
 	}
 
 	public void cleanFields() {
+		txtAddress.setText("");
+		txtCellNum.setText("");
+		txtEmail.setText("");
+		txtMsg.setText("");
+		txtName.setText("");
+		txtNotes.setText("");
+		txtPhoneNum.setText("");
+		txtRecName.setText("");
+		txtWebsite.setText("");
 	}
 }
