@@ -36,7 +36,7 @@ public class Home extends JFrame {
 	private JLabel lblUsername;
 	private JScrollPane scrollPaneContactList;
 	private JSeparator separator;
-	private JList list;
+	private JList contactJlist;
 	private JLabel lblName;
 	private JTextField txtName;
 	private JLabel lblAdress;
@@ -181,10 +181,10 @@ public class Home extends JFrame {
 		scrollPaneContactList = new JScrollPane();
 		scrollPaneContactList.setBounds(29, 55, 187, 292);
 		getContentPane().add(scrollPaneContactList);
-		list = new JList();
-		list.setFont(new Font("Tahoma", Font.BOLD, 14));
-		scrollPaneContactList.setViewportView(list);
-		list.setModel(new AbstractListModel() {
+		contactJlist = new JList();
+		contactJlist.setFont(new Font("Tahoma", Font.BOLD, 14));
+		scrollPaneContactList.setViewportView(contactJlist);
+		contactJlist.setModel(new AbstractListModel() {
 			public int getSize() {
 				return contactList.length;
 			}
@@ -193,11 +193,11 @@ public class Home extends JFrame {
 				return contactList[index];
 			}
 		});
-		list.addMouseListener(new MouseAdapter() {
+		contactJlist.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (list.getSelectedIndex() >= 0) {
-					String contactName = list.getSelectedValue().toString();
+				if (contactJlist.getSelectedIndex() >= 0) {
+					String contactName = contactJlist.getSelectedValue().toString();
 					ContactInfo contact = control.getContactInfo(contactName);
 					txtName.setText(contactName);
 					txtAddress.setText(contact.getAddress());
@@ -250,6 +250,8 @@ public class Home extends JFrame {
 		getContentPane().add(btnSearchContact);
 
 		btnSendMsg = new JButton("Send Msg");
+		btnSendMsg.setBounds(613, 196, 104, 23);
+		getContentPane().add(btnSendMsg);
 		btnSendMsg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (txtMsg.getText().length() > 0 && txtRecName.getText().length() > 0) {
@@ -270,10 +272,10 @@ public class Home extends JFrame {
 				}
 			}
 		});
-		btnSendMsg.setBounds(613, 196, 104, 23);
-		getContentPane().add(btnSendMsg);
 
 		btnDeleteMsg = new JButton("Delete Msg");
+		btnDeleteMsg.setBounds(529, 428, 104, 23);
+		getContentPane().add(btnDeleteMsg);
 		btnDeleteMsg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (listMessage.getSelectedIndex() >= 0) {
@@ -290,27 +292,24 @@ public class Home extends JFrame {
 					});
 				} else {
 					JOptionPane.showMessageDialog(btnDeleteMsg, "No message selected");
-
 				}
 			}
 		});
-		btnDeleteMsg.setBounds(529, 428, 104, 23);
-		getContentPane().add(btnDeleteMsg);
 
 		btnOpenUrl = new JButton("Open Url");
+		btnOpenUrl.setBounds(354, 358, 88, 23);
+		getContentPane().add(btnOpenUrl);
 		btnOpenUrl.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (txtWebsite.getText().length() > 0) {
 					control.openUrl(txtWebsite.getText());
 				} else {
 					JOptionPane.showMessageDialog(btnOpenUrl, "There is no url for the contact");
-
 				}
 			}
 		});
-		btnOpenUrl.setBounds(354, 358, 88, 23);
-		getContentPane().add(btnOpenUrl);
 
+// SEPARATOR
 		separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setForeground(Color.BLACK);
@@ -324,6 +323,7 @@ public class Home extends JFrame {
 		separator_1.setBackground(Color.BLACK);
 		separator_1.setBounds(536, 55, 12, 290);
 		getContentPane().add(separator_1);
+
 // EXIT
 		lblExit = new JLabel("x");
 		lblExit.setForeground(Color.BLACK);

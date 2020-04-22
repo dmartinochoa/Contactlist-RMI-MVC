@@ -50,7 +50,6 @@ public class Login extends JFrame {
 		getContentPane().add(btnLogin);
 		btnLogin.setEnabled(false);
 		btnLogin.addMouseListener(new MouseAdapter() {
-
 			public void mouseEntered(MouseEvent e) {
 				btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
@@ -70,7 +69,6 @@ public class Login extends JFrame {
 		btnNewUser.setFont(new Font("SansSerif", Font.BOLD, 15));
 		getContentPane().add(btnNewUser);
 		btnNewUser.addMouseListener(new MouseAdapter() {
-
 			public void mouseEntered(MouseEvent e) {
 				btnNewUser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
@@ -87,7 +85,7 @@ public class Login extends JFrame {
 		lblTitle.setFont(new Font("SansSerif", Font.BOLD, 50));
 		getContentPane().add(lblTitle);
 
-		lblUsername = new JLabel("UserName:");
+		lblUsername = new JLabel("Username:");
 		lblUsername.setForeground(Color.BLACK);
 		lblUsername.setBounds(235, 268, 87, 20);
 		lblUsername.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -105,7 +103,6 @@ public class Login extends JFrame {
 		getContentPane().add(txtUsername);
 		txtUsername.setColumns(10);
 		txtUsername.addKeyListener(new KeyAdapter() {
-
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (txtUsername.getText().length() > 0 && passwordField.getPassword().length > 0) {
@@ -128,7 +125,6 @@ public class Login extends JFrame {
 		passwordField.setBounds(330, 295, 152, 22);
 		getContentPane().add(passwordField);
 		passwordField.addKeyListener(new KeyAdapter() {
-
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (txtUsername.getText().length() > 0 && passwordField.getPassword().length > 0) {
@@ -155,7 +151,6 @@ public class Login extends JFrame {
 		lblExit.setBounds(752, 11, 38, 33);
 		getContentPane().add(lblExit);
 		lblExit.addMouseListener(new MouseAdapter() {
-
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
 			}
@@ -172,7 +167,6 @@ public class Login extends JFrame {
 		lblMinimize.setBounds(715, 11, 30, 33);
 		getContentPane().add(lblMinimize);
 		lblMinimize.addMouseListener(new MouseAdapter() {
-
 			public void mouseClicked(MouseEvent e) {
 				setState(ICONIFIED);
 			}
@@ -184,7 +178,6 @@ public class Login extends JFrame {
 
 // Listeners para mover la ventana
 		getContentPane().addMouseListener(new MouseAdapter() {
-
 			public void mousePressed(MouseEvent e) {
 				xx = e.getX();
 				xy = e.getY();
@@ -192,7 +185,6 @@ public class Login extends JFrame {
 		});
 
 		getContentPane().addMouseMotionListener(new MouseMotionAdapter() {
-
 			public void mouseDragged(MouseEvent e) {
 				int x = e.getXOnScreen();
 				int y = e.getYOnScreen();
