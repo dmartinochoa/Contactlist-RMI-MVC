@@ -13,8 +13,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
+import modelo.ContactInfo;
 import view.Login;
 
 public class ServerAgenda implements InterfaceAgenda {
@@ -159,19 +161,75 @@ public class ServerAgenda implements InterfaceAgenda {
 	@Override
 	public String getUser() throws RemoteException {
 		ResultSet rs = null;
-		String title = null;
+		String name = null;
 		try {
-			String query = "select username, id from user where username = ?;";
+			String query = "select username from user where username = ?;";
 			PreparedStatement pstms = conection.prepareStatement(query);
 			pstms.setString(1, user);
 			rs = pstms.executeQuery();
 			if (rs.next()) {
-				title = rs.getString(1);
-				title += " Id:" + rs.getString(2);
+				name = rs.getString(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return title;
+		return name;
+	}
+
+	@Override
+	public String getId() throws RemoteException {
+		ResultSet rs = null;
+		String id = null;
+		try {
+			String query = "select id from user where username = ?;";
+			PreparedStatement pstms = conection.prepareStatement(query);
+			pstms.setString(1, user);
+			rs = pstms.executeQuery();
+			if (rs.next()) {
+				id = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+
+	@Override
+	public String[] getContacts() throws RemoteException {
+		ResultSet rs = null;
+		ArrayList<String> contactList = new ArrayList<String>();
+		try {
+			String query = "select name from contacts where idUser = ?;";
+			PreparedStatement pstms = conection.prepareStatement(query);
+			pstms.setString(1, getId());
+			rs = pstms.executeQuery();
+			while (rs.next()) {
+				String name = rs.getString(1);
+				contactList.add(name);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		String[] contactArray = contactList.toArray(new String[contactList.size()]);
+		return contactArray;
+	}
+
+	@Override
+	public ContactInfo getContactInfo(String contactName) throws RemoteException {
+		ResultSet rs = null;
+		try {
+			String query = "select name, address, phoneNumber, cellNumber, email, website, notes from contacts where name = ?;";
+			PreparedStatement pstms = conection.prepareStatement(query);
+			pstms.setString(1, contactName);
+			rs = pstms.executeQuery();
+			if (rs.next()) {
+				ContactInfo contactInfo = new ContactInfo(rs.getString(1), rs.getString(2), rs.getString(3),
+						rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+				return contactInfo;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

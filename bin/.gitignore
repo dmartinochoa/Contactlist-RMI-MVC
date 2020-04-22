@@ -1,5 +1,4 @@
-/server/
-/client/
-/control/
 /view/
-/model/
+/server/
+/control/
+/modelo/

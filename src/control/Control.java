@@ -3,6 +3,8 @@ package control;
 import view.*;
 
 import java.rmi.RemoteException;
+
+import modelo.ContactInfo;
 import server.InterfaceAgenda;
 
 public class Control {
@@ -55,8 +57,34 @@ public class Control {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-		return "is the a joke";
+		return "User not found";
+	}
 
+	public String getId() {
+		try {
+			return agenda.getId();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return "Id not found";
+	}
+
+	public String[] getContacts() {
+		try {
+			return agenda.getContacts();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public ContactInfo getContactInfo(String contactName) {
+		try {
+			return agenda.getContactInfo(contactName);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 // Create Account View

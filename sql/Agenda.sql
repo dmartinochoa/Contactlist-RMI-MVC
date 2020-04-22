@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2020 at 09:13 PM
+-- Generation Time: Apr 22, 2020 at 02:17 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -21,6 +21,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `agenda`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `id` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `address` varchar(30) NOT NULL,
+  `phoneNumber` varchar(12) NOT NULL,
+  `cellNumber` varchar(12) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `website` varchar(30) NOT NULL,
+  `notes` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`id`, `idUser`, `name`, `address`, `phoneNumber`, `cellNumber`, `email`, `website`, `notes`) VALUES
+(1, 1, 'TESTNAME', '', '', '', '', '', ''),
+(3, 1, 'Daniel', 'Mi Casa', '12345', '543321', 'test@gmail.com', 'www.test.com', 'hi');
 
 -- --------------------------------------------------------
 
@@ -47,6 +73,13 @@ INSERT INTO `user` (`id`, `username`, `password`) VALUES
 --
 
 --
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idUser` (`idUser`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -57,10 +90,26 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD CONSTRAINT `foreign key userId` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
