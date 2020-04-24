@@ -111,10 +111,10 @@ public class Control {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void openUrl(String url) {
 		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-		    try {
+			try {
 				Desktop.getDesktop().browse(new URI(url));
 			} catch (IOException | URISyntaxException e) {
 				e.printStackTrace();
