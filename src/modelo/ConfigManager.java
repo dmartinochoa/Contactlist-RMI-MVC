@@ -20,10 +20,10 @@ public class ConfigManager {
 			if (config.exists()) {
 				input = new FileInputStream(config);
 				properties.load(input);
-				this.username = properties.getProperty("USUARIO");
-				this.pwd = properties.getProperty("PWD");
-				this.url = properties.getProperty("URL");
-				this.driver = properties.getProperty("DRIVER");
+				this.username = properties.getProperty("user");
+				this.pwd = properties.getProperty("pwd");
+				this.url = properties.getProperty("url");
+				this.driver = properties.getProperty("driver");
 			} else
 				System.err.println("File not found");
 		} catch (IOException ex) {
