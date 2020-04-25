@@ -56,17 +56,18 @@ public class Home extends JFrame {
 	private JButton btnEditContact;
 	private JButton btnDeleteContact;
 	private JButton btnSearchContact;
-	private JScrollPane scrollPaneMessage;
+	private JScrollPane scrollPaneMessageList;
 	private JButton btnSendMsg;
 	private JButton btnDeleteMsg;
 	private JList listMessage;
 	private JSeparator separator_1;
 	private JTextField txtMsg;
-	private JScrollPane scrollPaneMsg;
 	private JTextField txtRecName;
 	private JLabel lblInputUsername;
 	private JLabel lblLogout;
 	private JButton btnOpenUrl;
+	private JScrollPane scrollPaneMsg;
+	private JLabel lblMsg;
 
 	public Home(Control control) {
 		this.control = control;
@@ -77,105 +78,110 @@ public class Home extends JFrame {
 		setBounds(100, 100, 800, 500);
 
 		setUndecorated(true); // Removes border
-		setShape(new RoundRectangle2D.Double(0, 0, 800, 500, 40, 40)); // Border radius
+		setShape(new RoundRectangle2D.Double(0, 0, 800, 500, 40, 40));
 		getContentPane().setLayout(null);
 
 // LABELS
 		lblUsername = new JLabel("New label");
+		lblUsername.setBounds(29, 11, 509, 33);
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblUsername.setBounds(29, 11, 303, 33);
-		lblUsername.setText(control.getUser() + "´s Adenda");
+		lblUsername.setText(control.getUser() + "'s Contact List");
 		getContentPane().add(lblUsername);
 
 		lblName = new JLabel("Name:");
-		lblName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblName.setBounds(260, 55, 98, 21);
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(lblName);
 
 		lblAdress = new JLabel("Adress:");
-		lblAdress.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblAdress.setBounds(260, 87, 98, 21);
+		lblAdress.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(lblAdress);
 
 		lblPhoneNum = new JLabel("Home Number:");
-		lblPhoneNum.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblPhoneNum.setBounds(260, 119, 98, 21);
+		lblPhoneNum.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(lblPhoneNum);
 
 		lblCellNumber = new JLabel("Cell Number:");
-		lblCellNumber.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCellNumber.setBounds(260, 151, 98, 21);
+		lblCellNumber.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(lblCellNumber);
 
 		lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblEmail.setBounds(260, 183, 98, 21);
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(lblEmail);
 
 		lblWebsite = new JLabel("Website:");
-		lblWebsite.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblWebsite.setBounds(260, 215, 98, 21);
+		lblWebsite.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(lblWebsite);
 
 		lblNotes = new JLabel("Notes:");
-		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNotes.setBounds(260, 247, 98, 21);
+		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(lblNotes);
 
 		lblInputUsername = new JLabel("Username:");
+		lblInputUsername.setBounds(562, 195, 98, 21);
 		lblInputUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblInputUsername.setBounds(558, 164, 98, 21);
 		getContentPane().add(lblInputUsername);
+
+		lblMsg = new JLabel("Write a Message");
+		lblMsg.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblMsg.setBounds(562, 59, 200, 21);
+		getContentPane().add(lblMsg);
 
 // TEXTBOX
 		txtName = new JTextField();
-		txtName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		txtName.setBounds(369, 55, 150, 20);
+		txtName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(txtName);
-		txtName.setColumns(10);
 
 		txtAddress = new JTextField();
-		txtAddress.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtAddress.setColumns(10);
 		txtAddress.setBounds(369, 87, 150, 20);
+		txtAddress.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(txtAddress);
 
 		txtPhoneNum = new JTextField();
-		txtPhoneNum.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtPhoneNum.setColumns(10);
 		txtPhoneNum.setBounds(369, 120, 150, 20);
+		txtPhoneNum.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(txtPhoneNum);
 
 		txtCellNum = new JTextField();
-		txtCellNum.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtCellNum.setColumns(10);
 		txtCellNum.setBounds(369, 152, 150, 20);
+		txtCellNum.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(txtCellNum);
 
 		txtEmail = new JTextField();
-		txtEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtEmail.setColumns(10);
 		txtEmail.setBounds(369, 184, 150, 20);
+		txtEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(txtEmail);
 
 		txtWebsite = new JTextField();
-		txtWebsite.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtWebsite.setColumns(10);
 		txtWebsite.setBounds(369, 216, 150, 20);
+		txtWebsite.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(txtWebsite);
 
 		scrollPaneNotes = new JScrollPane();
 		scrollPaneNotes.setBounds(260, 276, 259, 71);
 		getContentPane().add(scrollPaneNotes);
 		txtNotes = new JTextField();
-		txtNotes.setHorizontalAlignment(SwingConstants.LEFT);
 		scrollPaneNotes.setViewportView(txtNotes);
 		txtNotes.setFont(new Font("Tahoma", Font.BOLD, 12));
-		txtNotes.setColumns(10);
 
 		txtRecName = new JTextField();
-		txtRecName.setBounds(666, 165, 96, 20);
+		txtRecName.setBounds(666, 196, 96, 20);
+		txtRecName.setFont(new Font("Tahoma", Font.BOLD, 12));
 		getContentPane().add(txtRecName);
+
+		scrollPaneMsg = new JScrollPane();
+		scrollPaneMsg.setBounds(560, 87, 202, 95);
+		getContentPane().add(scrollPaneMsg);
+		txtMsg = new JTextField();
+		scrollPaneMsg.setViewportView(txtMsg);
+		txtMsg.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 // CONTACT LIST
 		scrollPaneContactList = new JScrollPane();
@@ -211,9 +217,9 @@ public class Home extends JFrame {
 		});
 
 // MESSAGE LIST
-		scrollPaneMessage = new JScrollPane();
-		scrollPaneMessage.setBounds(29, 392, 490, 97);
-		getContentPane().add(scrollPaneMessage);
+		scrollPaneMessageList = new JScrollPane();
+		scrollPaneMessageList.setBounds(29, 392, 490, 97);
+		getContentPane().add(scrollPaneMessageList);
 		listMessage = new JList();
 		listMessage.setModel(new AbstractListModel() {
 			public int getSize() {
@@ -224,13 +230,7 @@ public class Home extends JFrame {
 				return messages[index];
 			}
 		});
-		scrollPaneMessage.setViewportView(listMessage);
-
-		scrollPaneMsg = new JScrollPane();
-		scrollPaneMsg.setBounds(558, 55, 204, 97);
-		getContentPane().add(scrollPaneMsg);
-		txtMsg = new JTextField();
-		scrollPaneMsg.setViewportView(txtMsg);
+		scrollPaneMessageList.setViewportView(listMessage);
 
 // BUTTONS 
 		btnNewContact = new JButton("New");
@@ -250,7 +250,7 @@ public class Home extends JFrame {
 		getContentPane().add(btnSearchContact);
 
 		btnSendMsg = new JButton("Send Msg");
-		btnSendMsg.setBounds(613, 196, 104, 23);
+		btnSendMsg.setBounds(616, 227, 104, 23);
 		getContentPane().add(btnSendMsg);
 		btnSendMsg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -311,24 +311,24 @@ public class Home extends JFrame {
 
 // SEPARATOR
 		separator = new JSeparator();
+		separator.setBounds(238, 57, 12, 290);
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setForeground(Color.BLACK);
 		separator.setBackground(Color.BLACK);
-		separator.setBounds(238, 57, 12, 290);
 		getContentPane().add(separator);
 
 		separator_1 = new JSeparator();
+		separator_1.setBounds(536, 55, 12, 290);
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		separator_1.setForeground(Color.BLACK);
 		separator_1.setBackground(Color.BLACK);
-		separator_1.setBounds(536, 55, 12, 290);
 		getContentPane().add(separator_1);
 
 // EXIT
 		lblExit = new JLabel("x");
+		lblExit.setBounds(752, 11, 38, 33);
 		lblExit.setForeground(Color.BLACK);
 		lblExit.setFont(new Font("Lucida Sans Unicode", Font.PLAIN, 40));
-		lblExit.setBounds(752, 11, 38, 33);
 		getContentPane().add(lblExit);
 		lblExit.addMouseListener(new MouseAdapter() {
 
@@ -343,9 +343,9 @@ public class Home extends JFrame {
 
 // MINIMIZE	
 		lblMinimize = new JLabel("-");
+		lblMinimize.setBounds(715, 11, 30, 33);
 		lblMinimize.setForeground(Color.BLACK);
 		lblMinimize.setFont(new Font("Lucida Sans Unicode", Font.PLAIN, 40));
-		lblMinimize.setBounds(715, 11, 30, 33);
 		getContentPane().add(lblMinimize);
 		lblMinimize.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -359,9 +359,9 @@ public class Home extends JFrame {
 
 // LOGOUT
 		lblLogout = new JLabel("Logout");
+		lblLogout.setBounds(626, 12, 78, 33);
 		lblLogout.setForeground(Color.BLACK);
 		lblLogout.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblLogout.setBounds(626, 12, 78, 33);
 		getContentPane().add(lblLogout);
 		lblLogout.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -374,6 +374,7 @@ public class Home extends JFrame {
 				lblLogout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 		});
+
 // Listeners para poder mover la vista
 		getContentPane().addMouseListener(new MouseAdapter() {
 			@Override
