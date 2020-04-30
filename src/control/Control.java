@@ -60,15 +60,6 @@ public class Control {
 		return "User not found";
 	}
 
-	public String getId() {
-		try {
-			return agenda.getId();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		return "Id not found";
-	}
-
 	public String[] getContacts() {
 		try {
 			return agenda.getContacts();
@@ -119,6 +110,30 @@ public class Control {
 			} catch (IOException | URISyntaxException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public void addContact(ContactInfo contact) {
+		try {
+			agenda.addContact(contact);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteContact(String name) {
+		try {
+			agenda.deleteContact(name);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void editContact(ContactInfo contact, String name) {
+		try {
+			agenda.editContact(contact, name);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 	}
 

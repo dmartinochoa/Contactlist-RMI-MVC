@@ -242,4 +242,68 @@ public class DbManager {
 			e.printStackTrace();
 		}
 	}
+
+	public void addContact(ContactInfo contact) throws NumberFormatException, RemoteException {
+		try {
+
+			String query = "insert into `contacts`(`idUser`, `name`, `address`, `phoneNumber`, `cellNumber`, `email`, "
+					+ "`website`, `notes`) values (?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement pstms = connection.prepareStatement(query);
+			int id = Integer.parseInt(getId());
+			pstms.setInt(1, id);
+			pstms.setString(2, contact.getName());
+			pstms.setString(3, contact.getAddress());
+			pstms.setString(4, contact.getPhoneNumber());
+			pstms.setString(5, contact.getCellNumber());
+			pstms.setString(6, contact.getEmail());
+			pstms.setString(7, contact.getWebsite());
+			pstms.setString(8, contact.getNotes());
+			pstms.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteContact(String name) throws NumberFormatException, RemoteException {
+
+		try {
+			int id = Integer.parseInt(getId());
+
+			String query = "delete from contacts where idUser= ? and name= ?";
+			PreparedStatement pstms = connection.prepareStatement(query);
+
+			pstms.setInt(1, id);
+			pstms.setString(2, name);
+			pstms.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void editContact(ContactInfo contact, String name) throws NumberFormatException, RemoteException {
+		try {
+
+			String query = "update `contacts` set `idUser`= ?, `name` = ?, `address` = ?,"
+					+ " `phoneNumber` = ?, `cellNumber` = ?, `email` = ?, "
+					+ "`website`= ?, `notes` = ? where `name` = ?";
+			PreparedStatement pstms = connection.prepareStatement(query);
+			int id = Integer.parseInt(getId());
+			pstms.setInt(1, id);
+			pstms.setString(2, contact.getName());
+			pstms.setString(3, contact.getAddress());
+			pstms.setString(4, contact.getPhoneNumber());
+			pstms.setString(5, contact.getCellNumber());
+			pstms.setString(6, contact.getEmail());
+			pstms.setString(7, contact.getWebsite());
+			pstms.setString(8, contact.getNotes());
+			pstms.setString(9, name);
+			pstms.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

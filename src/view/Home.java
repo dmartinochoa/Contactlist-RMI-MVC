@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Arrays;
 import java.awt.Cursor;
 
 import javax.swing.JFrame;
@@ -26,9 +27,12 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class Home extends JFrame {
 	private Control control;
+	private String name;
 
 	private int xx, xy; // position to move window
 	private JLabel lblExit;
@@ -55,7 +59,6 @@ public class Home extends JFrame {
 	private JButton btnNewContact;
 	private JButton btnEditContact;
 	private JButton btnDeleteContact;
-	private JButton btnSearchContact;
 	private JScrollPane scrollPaneMessageList;
 	private JButton btnSendMsg;
 	private JButton btnDeleteMsg;
@@ -234,25 +237,81 @@ public class Home extends JFrame {
 
 // BUTTONS 
 		btnNewContact = new JButton("New");
+		btnNewContact.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (txtName.getText().length() > 0 && !Arrays.stream(contactList).anyMatch("test2"::equals)) {
+					ContactInfo contact = new ContactInfo(txtName.getText(), txtAddress.getText(),
+							txtPhoneNum.getText(), txtCellNum.getText(), txtEmail.getText(), txtWebsite.getText(),
+							txtNotes.getText());
+					control.addContact(contact);
+					String[] contactList = control.getContacts();
+					contactJlist.setModel(new AbstractListModel() {
+						public int getSize() {
+							return contactList.length;
+						}
+
+						public Object getElementAt(int index) {
+							return contactList[index];
+						}
+					});
+				} else {
+					JOptionPane.showMessageDialog(btnDeleteMsg, "Name must be unique");
+				}
+			}
+		});
 		btnNewContact.setBounds(29, 358, 70, 23);
 		getContentPane().add(btnNewContact);
 
 		btnEditContact = new JButton("Edit");
+		btnEditContact.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (contactJlist.getSelectedIndex() >= 0) {
+					ContactInfo contact = new ContactInfo(txtName.getText(), txtAddress.getText(),
+							txtPhoneNum.getText(), txtCellNum.getText(), txtEmail.getText(), txtWebsite.getText(),
+							txtNotes.getText());
+					control.editContact(contact, contactJlist.getSelectedValue().toString());
+					String[] contactList = control.getContacts();
+					contactJlist.setModel(new AbstractListModel() {
+						public int getSize() {
+							return contactList.length;
+						}
+
+						public Object getElementAt(int index) {
+							return contactList[index];
+						}
+					});
+				} else {
+					JOptionPane.showMessageDialog(btnDeleteMsg, "No contact selected");
+				}
+			}
+		});
 		btnEditContact.setBounds(104, 358, 70, 23);
 		getContentPane().add(btnEditContact);
 
 		btnDeleteContact = new JButton("Delete");
+		btnDeleteContact.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				control.deleteContact(txtName.getText());
+				String[] contactList = control.getContacts();
+				contactJlist.setModel(new AbstractListModel() {
+					public int getSize() {
+						return contactList.length;
+					}
+
+					public Object getElementAt(int index) {
+						return contactList[index];
+					}
+				});
+			}
+		});
 		btnDeleteContact.setBounds(180, 358, 70, 23);
 		getContentPane().add(btnDeleteContact);
-
-		btnSearchContact = new JButton("Search");
-		btnSearchContact.setBounds(256, 358, 88, 23);
-		getContentPane().add(btnSearchContact);
 
 		btnSendMsg = new JButton("Send Msg");
 		btnSendMsg.setBounds(616, 227, 104, 23);
 		getContentPane().add(btnSendMsg);
 		btnSendMsg.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				if (txtMsg.getText().length() > 0 && txtRecName.getText().length() > 0) {
 					control.sendMessage(txtMsg.getText(), txtRecName.getText());
@@ -277,6 +336,7 @@ public class Home extends JFrame {
 		btnDeleteMsg.setBounds(529, 428, 104, 23);
 		getContentPane().add(btnDeleteMsg);
 		btnDeleteMsg.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				if (listMessage.getSelectedIndex() >= 0) {
 					String[] msgSplit = listMessage.getSelectedValue().toString().split(" : ");
@@ -297,9 +357,10 @@ public class Home extends JFrame {
 		});
 
 		btnOpenUrl = new JButton("Open Url");
-		btnOpenUrl.setBounds(354, 358, 88, 23);
+		btnOpenUrl.setBounds(260, 358, 88, 23);
 		getContentPane().add(btnOpenUrl);
 		btnOpenUrl.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				if (txtWebsite.getText().length() > 0) {
 					control.openUrl(txtWebsite.getText());

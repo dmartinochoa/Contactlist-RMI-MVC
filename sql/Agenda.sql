@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2020 at 04:14 PM
+-- Generation Time: Apr 30, 2020 at 09:38 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -45,8 +45,8 @@ CREATE TABLE `contacts` (
 --
 
 INSERT INTO `contacts` (`id`, `idUser`, `name`, `address`, `phoneNumber`, `cellNumber`, `email`, `website`, `notes`) VALUES
-(1, 1, 'TESTNAME', '', '', '', '', '', ''),
-(3, 1, 'Daniel', 'Mi Casa', '12345', '543321', 'test@gmail.com', 'www.test.com', 'hi');
+(29, 1, 'test', 'this', 'actually', 'works', 'nice', 'www.test.com', 'nice'),
+(36, 1, 'test2', 'this', 'actually', 'works', 'nice', 'www.test.com', 'nice');
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,9 @@ CREATE TABLE `messages` (
 
 INSERT INTO `messages` (`ID`, `message`, `username`, `recName`, `date`) VALUES
 (6, 'Hi', '123', 'test', '2020-04-22 16:12:15'),
-(7, 'Hello!', 'test', '123', '2020-04-22 16:12:37');
+(7, 'Hello!', 'test', '123', '2020-04-22 16:12:37'),
+(11, 'hola soy danny', '123', 'test', '2020-04-30 21:05:48'),
+(12, 'wassup', 'test', '123', '2020-04-30 21:30:24');
 
 -- --------------------------------------------------------
 
@@ -123,13 +125,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user`

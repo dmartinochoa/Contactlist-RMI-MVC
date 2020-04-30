@@ -31,11 +31,6 @@ public class ServerAgenda implements InterfaceAgenda {
 	}
 
 	@Override
-	public String getId() throws RemoteException {
-		return dbManager.getId();
-	}
-
-	@Override
 	public String[] getContacts() throws RemoteException {
 		return dbManager.getContacts();
 	}
@@ -56,6 +51,11 @@ public class ServerAgenda implements InterfaceAgenda {
 	}
 
 	@Override
+	public void addContact(ContactInfo contact) throws RemoteException {
+		dbManager.addContact(contact);
+	}
+
+	@Override
 	public void deleteMessage(int id) {
 		dbManager.deleteMessage(id);
 	}
@@ -63,6 +63,16 @@ public class ServerAgenda implements InterfaceAgenda {
 	@Override
 	public void closeSession() {
 		dbManager.closeSession();
+	}
+
+	@Override
+	public void deleteContact(String name) throws RemoteException {
+		dbManager.deleteContact(name);
+	}
+
+	@Override
+	public void editContact(ContactInfo contact, String name) throws RemoteException {
+		dbManager.editContact(contact, name);
 	}
 
 	public static void main(String[] args) {
@@ -81,5 +91,4 @@ public class ServerAgenda implements InterfaceAgenda {
 			e.printStackTrace();
 		}
 	}
-
 }
