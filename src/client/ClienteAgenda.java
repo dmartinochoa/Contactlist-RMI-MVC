@@ -20,7 +20,7 @@ public class ClienteAgenda {
 		if (agenda != null) {
 			System.out.println("Realizando operaciones con el objeto remoto");
 			@SuppressWarnings("unused")
-			Control control = new Control(agenda);
+			Control control = new Control();
 		}
 	}
 }

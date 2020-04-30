@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 
 import modelo.ContactInfo;
 import server.InterfaceAgenda;
+import server.ServerAgenda;
 
 public class Control {
 	private Login login;
@@ -17,8 +18,8 @@ public class Control {
 	private Home home;
 	private InterfaceAgenda agenda;
 
-	public Control(InterfaceAgenda agenda) {
-		this.agenda = agenda;
+	public Control() {
+		agenda = new ServerAgenda();
 		Login login = new Login(this);
 		this.setVista(login);
 		login.setVisible(true);
