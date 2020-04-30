@@ -1,1 +1,1 @@
-Agenda with messaging
+ContactList with messaging

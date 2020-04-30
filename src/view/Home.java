@@ -239,7 +239,7 @@ public class Home extends JFrame {
 		btnNewContact = new JButton("New");
 		btnNewContact.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (txtName.getText().length() > 0 && !Arrays.stream(contactList).anyMatch("test2"::equals)) {
+				if (txtName.getText().length() > 0 && !Arrays.stream(contactList).anyMatch(txtName.getText()::equals)) {
 					ContactInfo contact = new ContactInfo(txtName.getText(), txtAddress.getText(),
 							txtPhoneNum.getText(), txtCellNum.getText(), txtEmail.getText(), txtWebsite.getText(),
 							txtNotes.getText());
