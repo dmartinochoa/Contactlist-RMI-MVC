@@ -1,1 +1,1 @@
-Contact List with messaging
+Contact list with async messaging
